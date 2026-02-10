@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KrishiSahay - AI Farming Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Navigation Bar -->
+        <nav class="top-nav">
+            <div class="nav-left">
+                <div class="logo-main">
+                    <span class="logo-emoji">🌾</span>
+                    <span class="logo-text" data-en="KrishiSahay" data-hi="कृषि सहाय">KrishiSahay</span>
+                </div>
+            </div>
+            <div class="nav-right">
+                <button class="nav-btn theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Chat Messages Section -->
+            <div class="chat-area">
+                <div id="messagesWrapper" class="messages-wrapper">
+                    <div class="welcome-section-gradient">
+                        <div class="welcome-hero">
+                            <div class="hero-icon">🌾</div>
+                            <h1 data-en="कृषि सहाय" data-hi="कृषि सहाय" class="hero-title">कृषि सहाय</h1>
+                            <p class="hero-subtitle" data-en="Your AI Farming Companion" data-hi="आपका AI कृषि साथी">Your AI Farming Companion</p>
+                        </div>
+                        
+                        <div class="feature-cards">
+                            <div class="feature-card" style="background: linear-gradient(135deg, #2d5016 0%, #1a3a0a 100%);">
+                                <div class="card-icon">🌱</div>
+                                <h3 data-en="Smart Crops" data-hi="स्मार्ट फसलें">Smart Crops</h3>
+                                <p data-en="AI-powered crop recommendations" data-hi="AI-संचालित फसल सुझाव">AI-powered crop recommendations</p>
+                            </div>
+                            <div class="feature-card" style="background: linear-gradient(135deg, #8b6f47 0%, #5a4a3a 100%);">
+                                <div class="card-icon">🧪</div>
+                                <h3 data-en="Fertilizers" data-hi="उर्वरक">Fertilizers</h3>
+                                <p data-en="Nutrient guidance & planning" data-hi="पोषण मार्गदर्शन और योजना">Nutrient guidance & planning</p>
+                            </div>
+                            <div class="feature-card" style="background: linear-gradient(135deg, #3d6930 0%, #2a4620 100%);">
+                                <div class="card-icon">🔄</div>
+                                <h3 data-en="Rotation" data-hi="रोटेशन">Rotation</h3>
+                                <p data-en="Crop rotation optimization" data-hi="फसल चक्र अनुकूलन">Crop rotation optimization</p>
+                            </div>
+                            <div class="feature-card" style="background: linear-gradient(135deg, #d4a574 0%, #a0894a 100%);">
+                                <div class="card-icon">⛅</div>
+                                <h3 data-en="Weather" data-hi="मौसम">Weather</h3>
+                                <p data-en="Real-time weather insights" data-hi="रीयल-टाइम मौसम अंतर्दृष्टि">Real-time weather insights</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="sidebar-gradient">
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title" data-en="Chat History" data-hi="बातचीत का इतिहास">Chat History</h3>
+                    <button class="new-chat-btn-gradient" onclick="startNewChat()">
+                        <i class="fas fa-plus"></i>
+                        <span data-en="New Chat" data-hi="नई बातचीत">New Chat</span>
+                    </button>
+                    <div id="chatHistory" class="history-list-gradient"></div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Audio Player Section (Fixed) -->
+        <div id="audioSection" class="audio-section-fixed" style="display: none;">
+            <div class="audio-player">
+                <audio id="audioPlayer" controls style="width: 100%;"></audio>
+                <button id="downloadAudioBtn" class="download-audio-btn" onclick="downloadAudio()" title="Download Audio">
+                    <i class="fas fa-download"></i> Download
+                </button>
+            </div>
+        </div>
+
+        <!-- Input Section (Bottom) -->
+        <div class="input-section-gradient">
+            <div class="input-container">
+                <div class="language-selector-gradient">
+                    <select id="languageSelect" class="lang-select-gradient" onchange="changeLanguage(this.value)">
+                        <option value="English">English</option>
+                        <option value="Hindi">हिंदी</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <textarea 
+                        id="questionInput" 
+                        class="message-input-gradient" 
+                        placeholder="Ask about farming, crops, weather..."
+                        rows="1"
+                    ></textarea>
+                    <button class="send-btn-gradient" onclick="askQuestion()" title="Send (Ctrl+Enter)">
+                        <i class="fas fa-arrow-up"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio Player (Hidden) -->
+    <audio id="audioPlayer" style="display:none;"></audio>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal-gradient" style="display:none;">
+        <div class="modal-content-gradient">
+            <div class="modal-header-gradient">
+                <h2 data-en="Settings" data-hi="सेटिंग्स">Settings</h2>
+                <button class="modal-close-gradient" onclick="toggleSettings()">&times;</button>
+            </div>
+            <div class="modal-body-gradient">
+                <label class="setting-item-gradient">
+                    <input type="checkbox" id="audioToggle" checked>
+                    <span data-en="Audio responses" data-hi="ऑडियो प्रतिक्रिया">Enable audio responses</span>
+                </label>
+                <label class="setting-item-gradient">
+                    <input type="checkbox" id="animationToggle" checked>
+                    <span data-en="Animations" data-hi="एनिमेशन">Enable animations</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div id="loadingIndicator" class="loading-indicator" style="display:none;">
+        <div class="loader-gradient"></div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+google-genai
+gradio
+pandas
+gtts
+flask
+python-dotenv
+psycopg2-binary
+
