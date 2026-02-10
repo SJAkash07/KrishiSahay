@@ -70,7 +70,6 @@ KRISHISAHAY/
 ├── .env
 ├── .gitignore
 ├── requirements.txt
-├── test.py
 └── README.md
 ```
 
