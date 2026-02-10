@@ -200,8 +200,4 @@ The application continues to work even if TTS is unavailable.
 
 ---
 
-## 🏆 Hackathon Note
-
-KrishiSahay is built as a real-world, scalable agricultural assistant focusing on accessibility, AI + database integration, and farmer-centric decision making.
-
 ---
