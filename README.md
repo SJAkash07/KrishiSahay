@@ -205,7 +205,3 @@ The application continues to work even if TTS is unavailable.
 KrishiSahay is built as a real-world, scalable agricultural assistant focusing on accessibility, AI + database integration, and farmer-centric decision making.
 
 ---
-
-## 👨‍💻 Author
-
-Built with ❤️ for farmers and innovation.
